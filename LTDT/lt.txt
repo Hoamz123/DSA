@@ -1,0 +1,25 @@
+//don do thi
+//da do thi
+//gia do thi vo huong(hai dinh cua mot canh khong nhat thiet phai khac nhau)
+// -> canh ma co dinh dau va dinh cuoi khac nhau -> dinh khuyen
+//do thi co huong -> chi co mot huong tu dinh A sang dinh B
+//dinh ke : neu co canh noi giua hai dinh bk
+//canh lien thuoc ; canh noi giua hai dinh
+//bac cua dinh : do thi vo huong
+//ban bac cua dinh (ban bac ra + ban bac vao)
+//chu trinh la duong di gom cac canh phan biet co dinh dau trung voi dinh cuoi
+//do thi vo huong dc goi la lien thong neu giua hai dinh bat ki luon tim dc mot duong di
+//lien thong va do thi lien thong -> lien mach chi dung cho dt vo huong
+
+//hai kn dung cho dt co huong
+//lien thong manh : giua hai dinh bk luon co duong di
+//lien thong yeu : neu do thi vo huong tuong ung cua no lien thong
+
+
+
+//cach khoi tao grahp
+//ma tran ke
+//danh sach canh
+//danh sach ke
+
+
