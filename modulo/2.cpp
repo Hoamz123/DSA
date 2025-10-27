@@ -60,8 +60,6 @@ void solve(){
 int main(){
     faster();
     setUp();
-    // freopen("in.txt", "r", stdin);
-    // freopen("out.txt", "w", stdout);
     int t = 1;
     while(t--){
         solve();

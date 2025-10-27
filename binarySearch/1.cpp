@@ -14,12 +14,24 @@ bool bs(vector<int> &v,int x){
     return v[r] == x;
 }
 
+bool BS(const vector<int> a,int x){
+    int l = 0,r = (int)a.size() - 1;
+    while(l <= r){
+        int m = l + (r - l) / 2;
+        if(a[m] == x) return true;
+        else if(a[m] < x) l = m + 1;
+        else r =  m - 1;
+    }
+    return false;
+}
+//ok qua
+
 int main(){
     int n;cin >> n;
     vector<int> v(n+1,0);
     for(int i=0;i<n;i++) cin >> v[i];
     sort(v.begin(),v.end());
     int x;cin >> x;
-    if(bs(v,x)) cout << "Yes";
+    if(BS(v,x)) cout << "Yes";
     else cout << "No";
 }

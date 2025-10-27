@@ -4,6 +4,7 @@ using namespace std;
 #define ll long long
 int n,k;
 vector<int> v(maxn, 0);
+
 ll f(int x){
     ll s = 0;
     for(int i=0;i<n;i++){
