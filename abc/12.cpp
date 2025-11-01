@@ -20,30 +20,40 @@ using namespace std;
 #define PER(i, a, b) for (int i = a; i >= b; --i)
 #define endl '\n'
 
-//cho so k hay tim do dai cua day con dai nhat sao cho sau k thao tac chuyen a[i] -> gia tri bat ki thi day co toan phan tu giong nhau
+bool ok(int x,int y,int d){
+    return x - y > d || y - x > d;
+}
 
 void solve(){
-    int n,k;cin >> n >> k;
+    int n,d;cin >> n >> d;
     vi a(n + 1,0);
     FOR1(i,n) cin >> a[i];
-    unordered_map<int,int> mp;
-    int ans = 0;
-    int L = 1;
-    int maxFreq = 0;//tan suat lon nhat trong doan hien tai
-    FOR1(R,n){
-        mp[a[R]]++;//gap a[R] -> tan suat cua a[R] tang nen
-        maxFreq = max(maxFreq,mp[a[R]]);
-        while((R - L + 1)  - maxFreq > k){
-            mp[a[L++]]--;
+    sort(a.begin(),a.end());
+    int cnt = 0;
+    int l = 1;
+    REP(i,2,n){
+        while(ok(a[i],a[l],d)){
+            l++; 
         }
-        ans = max(ans,R - L + 1);
+        //chech here
+        // cout << i - l + 1 << endl;
+        int len = i - l + 1;
+        if(len >= 3){
+            cnt += ((len - 1) * (len - 2) / 2);
+            //co dinh i ta can chon ra 2 trong doan [l,i-1]
+        }
     }
-    cout << ans;
+    cout << cnt;
 }
 
 int main(){
     faster();
-    solve();
+    freopen("in.txt", "r", stdin);
+    freopen("out.txt", "w", stdout);
+    int t;cin >> t;
+    while(t--){
+        solve();
+    }
 }
 //                       _oo0oo_
 //                      o8888888o

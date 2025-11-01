@@ -20,25 +20,52 @@ using namespace std;
 #define PER(i, a, b) for (int i = a; i >= b; --i)
 #define endl '\n'
 
-//cho so k hay tim do dai cua day con dai nhat sao cho sau k thao tac chuyen a[i] -> gia tri bat ki thi day co toan phan tu giong nhau
+
+int a[maxn];
+int b[maxn];
+int n,k;
+int mini[maxn];
+
+bool check(int m){
+    int sum = 0;
+    int sum2 = 0;
+    FOR1(i,n){
+        b[i] = a[i] - m;
+    }
+    FOR1(i,n){
+        sum += b[i];
+        mini[i] = min(mini[i-1],sum);
+    }
+    sum = 0;
+    int p = 1;
+    FOR1(i,n){
+        sum += a[i];
+        sum2 += b[i];
+        while(p < i && sum >= k && sum - a[p] >= k){
+            sum -= a[p];
+            p++;
+        }
+        if(sum >= k && sum2 - mini[p-1] >= 0){
+            return true;
+        }
+    }
+    return false;
+}
 
 void solve(){
-    int n,k;cin >> n >> k;
-    vi a(n + 1,0);
+    cin >> n >> k;
     FOR1(i,n) cin >> a[i];
-    unordered_map<int,int> mp;
-    int ans = 0;
-    int L = 1;
-    int maxFreq = 0;//tan suat lon nhat trong doan hien tai
-    FOR1(R,n){
-        mp[a[R]]++;//gap a[R] -> tan suat cua a[R] tang nen
-        maxFreq = max(maxFreq,mp[a[R]]);
-        while((R - L + 1)  - maxFreq > k){
-            mp[a[L++]]--;
+    int l=0,r = 1e9;
+    int res = 0;
+    while(l <= r){
+        int m = l + (r - l) / 2;
+        if(check(m)){
+            res = m;
+            l = m + 1;
         }
-        ans = max(ans,R - L + 1);
+        else r = m - 1;
     }
-    cout << ans;
+    cout << res;
 }
 
 int main(){

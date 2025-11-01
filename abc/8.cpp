@@ -20,24 +20,37 @@ using namespace std;
 #define PER(i, a, b) for (int i = a; i >= b; --i)
 #define endl '\n'
 
-//cho so k hay tim do dai cua day con dai nhat sao cho sau k thao tac chuyen a[i] -> gia tri bat ki thi day co toan phan tu giong nhau
-
 void solve(){
-    int n,k;cin >> n >> k;
-    vi a(n + 1,0);
+    int n;cin >> n;
+    vi a(n + 5,0);
     FOR1(i,n) cin >> a[i];
-    unordered_map<int,int> mp;
-    int ans = 0;
-    int L = 1;
-    int maxFreq = 0;//tan suat lon nhat trong doan hien tai
-    FOR1(R,n){
-        mp[a[R]]++;//gap a[R] -> tan suat cua a[R] tang nen
-        maxFreq = max(maxFreq,mp[a[R]]);
-        while((R - L + 1)  - maxFreq > k){
-            mp[a[L++]]--;
+    vi b = a;
+    FOR1(i,n) a[i] += a[i-1];
+    unordered_map<ll,int> mp;
+    int idxSt = 0;
+    int ans = -1;
+    for(int i=1;i<=n;i++){
+        mp.clear();int l = 1,r = n;
+        while(l <= i){
+            int sum = a[i] - a[l-1];
+            mp[sum] = l;
+            l++;
         }
-        ans = max(ans,R - L + 1);
+        while(r > i){
+            int sum = a[r] - a[i];
+            if(mp.count(sum)){
+                ans = max(ans,r - mp[sum] + 1);
+                if(ans == r - mp[sum] + 1){
+                    idxSt = mp[sum];
+                }
+            }
+            r--;
+        }
     }
+    for(int i=0;i<ans;i++){
+        cout << b[idxSt + i] << ' ';
+    }
+    cout << endl;
     cout << ans;
 }
 

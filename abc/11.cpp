@@ -20,30 +20,57 @@ using namespace std;
 #define PER(i, a, b) for (int i = a; i >= b; --i)
 #define endl '\n'
 
-//cho so k hay tim do dai cua day con dai nhat sao cho sau k thao tac chuyen a[i] -> gia tri bat ki thi day co toan phan tu giong nhau
+int a[maxn];//mang ban dau
+int b[maxn];//b[i] = a[i] - m;suay ra tu cong thuc tbc voi m la tbc
+int n,k;
+int mi[maxn];//gia tr b[i] = a[i] - m,nho nhat tinh den i
+
+bool f(int m){
+    FOR1(i,n) b[i] = a[i] - m;
+    int sum = 0;
+    int sum2 = 0;
+    int p = 1;
+    FOR1(i,n){
+        sum += b[i];
+        mi[i] = min(mi[i-1],sum);
+    }
+    sum = 0;
+    FOR1(i,n){
+        sum += a[i];//tong day con tinh den i
+        sum2 += b[i];//tong cong don (a[i] - m) tinh den i
+        while(p < i && sum >= k && sum - a[p] >= k){
+            sum -= a[p++];
+        }
+        //tim dc p la gia tri ben phai lon nhat ma tong [p->i] >= k (cac doan [l->i] voi l thuoc [1->p] deu thoa man >= k)
+        if(sum >= k && sum2 - mi[p-1] >= 0) return true;
+    }
+    return false;
+}
 
 void solve(){
-    int n,k;cin >> n >> k;
-    vi a(n + 1,0);
+    cin >> n >> k;
     FOR1(i,n) cin >> a[i];
-    unordered_map<int,int> mp;
-    int ans = 0;
-    int L = 1;
-    int maxFreq = 0;//tan suat lon nhat trong doan hien tai
-    FOR1(R,n){
-        mp[a[R]]++;//gap a[R] -> tan suat cua a[R] tang nen
-        maxFreq = max(maxFreq,mp[a[R]]);
-        while((R - L + 1)  - maxFreq > k){
-            mp[a[L++]]--;
+    int l = 1,r = 1e9;
+    int ans = 0; 
+    while(l <= r){
+        int m = l + (r - l) / 2;//m nay la tbc
+        if(f(m)){
+            ans = m;
+            l = m + 1;
         }
-        ans = max(ans,R - L + 1);
+        else r = m - 1;
     }
-    cout << ans;
+    cout << ans << endl;
 }
 
 int main(){
     faster();
-    solve();
+    freopen("in.txt", "r", stdin);
+    freopen("out.txt", "w", stdout);
+    int t;cin >> t;
+    while(t--){
+        solve();
+    }
 }
 //                       _oo0oo_
 //                      o8888888o
