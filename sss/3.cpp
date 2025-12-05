@@ -1,0 +1,93 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define faster() {ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);}
+#define ll long long
+#define pii pair<int, int>
+#define vi vector<int>
+#define vll vector<long long>
+#define mii map<int, int>
+#define umi unordered_map<int,int>
+#define si set<int>
+#define pb push_back
+#define is insert
+#define mod 1000000007
+#define INF 1000000001
+#define ull unsigned long long
+#define maxn 1000005
+#define FOR1(i, n) for (int i = 1; i <= (n); i++)
+#define FOR0(i, n) for (int i = 0; i < (n); i++)
+#define REP(i, a, b) for (int i = a; i <= b; ++i)
+#define PER(i, a, b) for (int i = a; i >= b; --i)
+#define endl '\n'
+
+int n,m;
+int a[100][100];
+int vst[100][100];
+int dx[4] = {0,-1,0,1};
+int dy[4] = {-1,0,1,0};
+
+int ans = 0;
+
+void Try(int i,int j){
+    ans++;
+    vst[i][j] = 1;//danh dau la  da duyet qua roi
+    for(int k=0;k<4;k++){
+        int i1 = i + dx[k];
+        int j1 = j + dy[k];
+        if(i1 >= 1 && i1 <= n && j1 >= 1 && j1 <= m && a[i1][j1] == 1 && vst[i1][j1] == 0){
+            Try(i1,j1);
+        }
+    }
+}
+
+void solve(){
+    cin >> n >> m;
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            cin >> a[i][j];
+        }
+    }
+    int res = 0;
+    FOR1(i,n){
+        FOR1(j,m){
+            if(a[i][j] == 1){
+                Try(i,j);
+                res = max(res,ans);
+                ans = 0;
+            }
+        }
+    }
+    cout << res << endl;
+}
+
+int main(){
+    faster();
+    freopen("in.txt", "r", stdin);
+    freopen("out.txt", "w", stdout);
+    int t;cin >> t;
+    while(t--){
+        memset(vst,0,sizeof(vst));
+        solve();
+    }
+}
+//                       _oo0oo_
+//                      o8888888o
+//                      88" . "88
+//                      (| -_- |)
+//                      0\  =  /0
+//                    ___/`---'\___
+//                  .'  \|     |// '.
+//                 /  \|||  :  |||// \.
+//                / _||||| -:- |||||- \.
+//               |   |  \  -  /// |   |
+//               | \_|  ''\---/''  |_/ |
+//               \  .-\__  '-'  ___/-. /
+//            ___'. .'  /--.--\  `. .'___
+//          ."" '<  `.___\_<|>_/___.' >' "".
+//         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+//         \  \ `_.   \_ __\ /__ _/   .-` /  /
+//     =====`-.____`.___ \_____/___.-`___.-'=====
+//                       `=---='
+//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//           Phật phù hộ, không bao giờ BUG
+//     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

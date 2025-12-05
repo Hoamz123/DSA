@@ -35,7 +35,7 @@ ll _power(ll x,ll y){
     }
     return res;
 }
-
+    
 void setUp(){
     fact[0] = 1;
     //-> tinh giai thua
