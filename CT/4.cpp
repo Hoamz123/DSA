@@ -20,60 +20,45 @@ using namespace std;
 #define PER(i, a, b) for (int i = a; i >= b; --i)
 #define endl '\n'
 
-//tim doan con dai nhat ma cac phan tu chi xuat hien nhieu nhat 1 lan
+
+//trong luong W nho 
 void solve(){
-    int n;cin >> n;
-    vi a(n + 2,0);
-    FOR1(i,n) cin >> a[i];
-    a[n + 1] = a[0];
-    int ans = 1;
-    int l = 1;
-    int idx = 0;
-    unordered_map<int,int> mp;
-    FOR1(r,n + 1){
-        if(mp.count(a[r]) == 0){
-            //chua xuat hien -> luu vao
-            mp[a[r]] = 1;
-        }
-        else{
-            //neu da gap roi
-            ans = max(ans,r - l);
-            if(ans == r - l){
-                //banwg gia tri vua gan chung to ln nhat
-                idx = l;
-            }
-            while(l < r && mp[a[r]] != 0){
-                mp[a[l++]] = 0;
-            }
-            mp[a[r]] = 1;
+    int n,W;cin >> n >> W;
+    vi w(n + 1,0),v(n + 1,0);
+    FOR1(i,n){
+        cin >> w[i] >> v[i];
+    }
+    int dp[W + 1];
+    FOR0(i,W + 1) dp[i] = 0;
+    for(int i=1;i<=n;i++){
+        for(int j=W;j>=w[i];j--){
+            dp[j] = max(dp[j], dp[j - w[i]] + v[i]);
         }
     }
-    for(int i=0;i<ans;i++) cout << a[idx + i] << ' ';
-    cout << endl;
-    cout << ans;
+    cout << dp[W];
 }
 
 void solve2(){
-    int n;cin >> n;
-    vi a(n + 2,0);
-    FOR1(i,n) cin >> a[i];
-    map<int,int> mp;
+    int n,W;cin >> n >> W;
+    vi w(n + 1,0),v(n + 1,0);
+    int sum = 0;
+    FOR1(i,n){
+        cin >> w[i] >> v[i];
+        sum += v[i];
+    }
+    vll dp(sum + 1,INF);
+    dp[0] = 0;//dp[0] la can nang khi gia tri  = 0
+
+    FOR1(i,n)for(int j = sum;j >= v[i];j--){
+        dp[j] = max(dp[j],dp[j - v[i]] + w[i]);
+    }
+    //tim maxVal <= W
     int ans = 0;
-    int L = 1,sl = 0;
-    FOR1(r,n){
-        mp[a[r]]++;
-        if(mp[a[r]] > 1) sl++;
-        while(sl != 0){
-            mp[a[L++]]--;
-            if(mp[a[L]] == 1) sl--; 
-        }
-        if(sl == 0){
-            ans = max(ans,r - L + 1);
-        }
+    for(int i=1;i<=sum;i++){
+        if(dp[i] <= W) ans = max(ans,i);
     }
     cout << ans;
 }
-
 
 int main(){
     faster();
@@ -81,7 +66,7 @@ int main(){
     freopen("out.txt", "w", stdout);
     int t;cin >> t;
     while(t--){
-        solve2();
+        solve();
     }
 }
 //                       _oo0oo_

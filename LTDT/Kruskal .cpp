@@ -80,7 +80,6 @@ int main(){
     cout << endl;
     sort(canh.begin(),canh.end(),cmp);
     kruskal();
-
 }
 
 

@@ -43,7 +43,7 @@ void css(){
         if(!vst[u]){
             dfs2(u);
             //chay dc xuong day -> da xet xong 1 thanh phan lien thong
-            cout<< endl;
+            cout << endl;
             cnt++;
         }
     }

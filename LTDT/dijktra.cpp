@@ -3,10 +3,9 @@ using namespace std;
 
 int n,m,s;
 vector<pair<int,int>> adj[1001];
-//O((V+E)LOG(V))
 void dijkstra(int s){
     vector<int> d(1001,1e9);
-    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>> > q;
+    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>> > q;//min heap
     d[s] = 0;
     q.push({0,s});
     while(!q.empty()){

@@ -5,7 +5,6 @@ using namespace std;
 vector<int> adj[101];
 vector<int> color(101,-1);
 int n,m;
-
 bool bfs(int u){
     queue<int> q;
     q.push(u);

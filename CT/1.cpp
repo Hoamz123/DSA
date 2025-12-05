@@ -20,60 +20,57 @@ using namespace std;
 #define PER(i, a, b) for (int i = a; i >= b; --i)
 #define endl '\n'
 
-//tim doan con dai nhat ma cac phan tu chi xuat hien nhieu nhat 1 lan
+
+int p[maxn];
+void seive(){
+    FOR0(i,maxn) p[i] = 1;
+    p[1] = p[0] = 0;
+    for(int i=2;i<=sqrt(maxn);i++){
+        if(p[i]){
+            for(int j = i * i;j<maxn;j+=i) p[j] = 0;
+        }
+    }
+}
+
+ll maxll(ll a,ll b){
+    if(a > b) return a;
+    return b;
+}
+
+vll snt;
+//lay ra dung n so nguyen to trong doan L-R
+void sieveLR(ll l,ll r,int n){
+    int p[r - l + 1];
+    FOR0(i,r - l + 1) p[i] = 1;
+
+    for(ll i=2;i<=r;i++){
+        for(ll j = maxll(i * i,(l + i - 1) / i * i);j <= r;j+=i){
+            p[j - l] = 0;
+        }
+    }
+    for(ll i = maxll(l,2);i<=r;i++){
+        if(p[i-l]){
+            if((int)snt.size() < n) snt.push_back(i);
+        }
+    }
+}
+
+ll _pow(ll a, ll b){
+    ll res = 1;
+    a %= mod;
+    while(b){
+        if(b & 1) res = (a * res) % mod;
+        b >>= 1;
+        a = (a * a) % mod;
+    }
+    return res;
+}
+
 void solve(){
-    int n;cin >> n;
-    vi a(n + 2,0);
-    FOR1(i,n) cin >> a[i];
-    a[n + 1] = a[0];
-    int ans = 1;
-    int l = 1;
-    int idx = 0;
-    unordered_map<int,int> mp;
-    FOR1(r,n + 1){
-        if(mp.count(a[r]) == 0){
-            //chua xuat hien -> luu vao
-            mp[a[r]] = 1;
-        }
-        else{
-            //neu da gap roi
-            ans = max(ans,r - l);
-            if(ans == r - l){
-                //banwg gia tri vua gan chung to ln nhat
-                idx = l;
-            }
-            while(l < r && mp[a[r]] != 0){
-                mp[a[l++]] = 0;
-            }
-            mp[a[r]] = 1;
-        }
-    }
-    for(int i=0;i<ans;i++) cout << a[idx + i] << ' ';
-    cout << endl;
-    cout << ans;
+    int l,r;cin >> l >> r;
+    sieveLR(l,r,10);
+    for(ll val : snt) cout << val << ' ';
 }
-
-void solve2(){
-    int n;cin >> n;
-    vi a(n + 2,0);
-    FOR1(i,n) cin >> a[i];
-    map<int,int> mp;
-    int ans = 0;
-    int L = 1,sl = 0;
-    FOR1(r,n){
-        mp[a[r]]++;
-        if(mp[a[r]] > 1) sl++;
-        while(sl != 0){
-            mp[a[L++]]--;
-            if(mp[a[L]] == 1) sl--; 
-        }
-        if(sl == 0){
-            ans = max(ans,r - L + 1);
-        }
-    }
-    cout << ans;
-}
-
 
 int main(){
     faster();
@@ -81,7 +78,7 @@ int main(){
     freopen("out.txt", "w", stdout);
     int t;cin >> t;
     while(t--){
-        solve2();
+        solve();
     }
 }
 //                       _oo0oo_

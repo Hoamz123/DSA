@@ -20,58 +20,21 @@ using namespace std;
 #define PER(i, a, b) for (int i = a; i >= b; --i)
 #define endl '\n'
 
-//tim doan con dai nhat ma cac phan tu chi xuat hien nhieu nhat 1 lan
 void solve(){
-    int n;cin >> n;
-    vi a(n + 2,0);
-    FOR1(i,n) cin >> a[i];
-    a[n + 1] = a[0];
-    int ans = 1;
-    int l = 1;
-    int idx = 0;
-    unordered_map<int,int> mp;
-    FOR1(r,n + 1){
-        if(mp.count(a[r]) == 0){
-            //chua xuat hien -> luu vao
-            mp[a[r]] = 1;
-        }
-        else{
-            //neu da gap roi
-            ans = max(ans,r - l);
-            if(ans == r - l){
-                //banwg gia tri vua gan chung to ln nhat
-                idx = l;
+    string s;cin >> s;
+    int n = s.size();
+    int dp[n][n];
+    for(int len = 1;len <= n;len ++){
+        for(int i = 0;i<n - len + 1;i++){
+            int j = i + len - 1;
+            if(len == 1) dp[i][j] = 1;
+            else{
+                if(s[i] == s[j]) dp[i][j] = dp[i+1][j-1] + 2;
+                else dp[i][j] = max(dp[i+1][j],dp[i][j-1]);
             }
-            while(l < r && mp[a[r]] != 0){
-                mp[a[l++]] = 0;
-            }
-            mp[a[r]] = 1;
         }
     }
-    for(int i=0;i<ans;i++) cout << a[idx + i] << ' ';
-    cout << endl;
-    cout << ans;
-}
-
-void solve2(){
-    int n;cin >> n;
-    vi a(n + 2,0);
-    FOR1(i,n) cin >> a[i];
-    map<int,int> mp;
-    int ans = 0;
-    int L = 1,sl = 0;
-    FOR1(r,n){
-        mp[a[r]]++;
-        if(mp[a[r]] > 1) sl++;
-        while(sl != 0){
-            mp[a[L++]]--;
-            if(mp[a[L]] == 1) sl--; 
-        }
-        if(sl == 0){
-            ans = max(ans,r - L + 1);
-        }
-    }
-    cout << ans;
+    cout << dp[0][n-1];   
 }
 
 
@@ -81,7 +44,7 @@ int main(){
     freopen("out.txt", "w", stdout);
     int t;cin >> t;
     while(t--){
-        solve2();
+        solve();
     }
 }
 //                       _oo0oo_

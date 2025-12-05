@@ -20,60 +20,47 @@ using namespace std;
 #define PER(i, a, b) for (int i = a; i >= b; --i)
 #define endl '\n'
 
-//tim doan con dai nhat ma cac phan tu chi xuat hien nhieu nhat 1 lan
 void solve(){
-    int n;cin >> n;
-    vi a(n + 2,0);
-    FOR1(i,n) cin >> a[i];
-    a[n + 1] = a[0];
-    int ans = 1;
-    int l = 1;
-    int idx = 0;
-    unordered_map<int,int> mp;
-    FOR1(r,n + 1){
-        if(mp.count(a[r]) == 0){
-            //chua xuat hien -> luu vao
-            mp[a[r]] = 1;
+    int n,k;cin >> n >> k;
+    vi a(n,0);
+    FOR0(i,n) cin >> a[i];
+    sort(a.begin(),a.end());
+    int ans = 0;
+    //case 1'
+    if(n == 1){
+        int aa = a[0];
+        if(aa > k){
+            ans = k * (2 * aa + k - 1) / 2;
+        }
+        else {
+            int T = k / aa;
+            int r = k % aa;
+            ans += T * (aa * (aa + 1) / 2);
+            if(r){
+                ans += r * (2 * aa - r + 1) / 2;
+            }
+        }
+    }
+    else{
+        int M1 = a[n-1];
+        int M2 = a[n-2];
+        //M1 >= M2
+        if(M1 == M2){
+            ans = k * M1;
+            //nghe M1 -> Nghe M2
         }
         else{
-            //neu da gap roi
-            ans = max(ans,r - l);
-            if(ans == r - l){
-                //banwg gia tri vua gan chung to ln nhat
-                idx = l;
-            }
-            while(l < r && mp[a[r]] != 0){
-                mp[a[l++]] = 0;
-            }
-            mp[a[r]] = 1;
-        }
-    }
-    for(int i=0;i<ans;i++) cout << a[idx + i] << ' ';
-    cout << endl;
-    cout << ans;
-}
-
-void solve2(){
-    int n;cin >> n;
-    vi a(n + 2,0);
-    FOR1(i,n) cin >> a[i];
-    map<int,int> mp;
-    int ans = 0;
-    int L = 1,sl = 0;
-    FOR1(r,n){
-        mp[a[r]]++;
-        if(mp[a[r]] > 1) sl++;
-        while(sl != 0){
-            mp[a[L++]]--;
-            if(mp[a[L]] == 1) sl--; 
-        }
-        if(sl == 0){
-            ans = max(ans,r - L + 1);
+            int cnt = M1 - M2 + 1;//nghe tu M1 den khi giam xuong = M2
+            //so luong chu ki
+            int T = k / cnt;
+            int r = k % cnt;//r < cnt ma cnt <= M1
+            ans = T * ((M1 - M2 + 1) * (M1 + M2) / 2);
+            //nghe them r lan nua
+            ans += r * (2 * M1 - r + 1) / 2;
         }
     }
     cout << ans;
 }
-
 
 int main(){
     faster();
@@ -81,7 +68,7 @@ int main(){
     freopen("out.txt", "w", stdout);
     int t;cin >> t;
     while(t--){
-        solve2();
+        solve();
     }
 }
 //                       _oo0oo_

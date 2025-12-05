@@ -17,7 +17,6 @@ void prim(int u){
     int res = 0;
     p.push({0,u});
 
-
     while(!p.empty()){
         auto top = p.top();p.pop();
         int x = top.second;
